@@ -25,6 +25,7 @@
 		EBC181C8252272EB00BF8BE7 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C2252272EB00BF8BE7 /* UIImage+Extension.swift */; };
 		EBC181C9252272EB00BF8BE7 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C3252272EB00BF8BE7 /* UIColor+Extensions.swift */; };
 		EBC181CA252272EB00BF8BE7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C4252272EB00BF8BE7 /* UIViewController+Extension.swift */; };
+		EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC711132534B5740023D20B /* FaceDetectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		EBC181C2252272EB00BF8BE7 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		EBC181C3252272EB00BF8BE7 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		EBC181C4252272EB00BF8BE7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		EBC711132534B5740023D20B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				EBAE216825223FF10071A7E9 /* Info.plist */,
 				EBAE217825224A300071A7E9 /* FaceMaskViewController.swift */,
 				EBC181AA25226BE200BF8BE7 /* VideoCapture.swift */,
+				EBC711132534B5740023D20B /* FaceDetectionViewController.swift */,
 			);
 			path = Anti_Peep;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				EBC181B7252272D700BF8BE7 /* BtnVide.swift in Sources */,
 				EBC181BA252272D700BF8BE7 /* Button.swift in Sources */,
 				EBC181C5252272EB00BF8BE7 /* UIView+Extensions.swift in Sources */,
+				EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

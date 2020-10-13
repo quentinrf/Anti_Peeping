@@ -14,7 +14,7 @@ class ViewController: UIViewController {
            let text = UILabel()
             text.translatesAutoresizingMaskIntoConstraints = false
             text.font = UIFont(name: "Avenir-Heavy", size: 50)
-            text.text = "Face AI"
+            text.text = "Anti Peep"
             text.textColor = .label
             return text
             
@@ -27,28 +27,27 @@ class ViewController: UIViewController {
         button.setTitle("Face mask", for: .normal)
         //let icon = UIImage(systemName: "eye")//?.resized(newSize: CGSize(width: 50, height: 30))
         //button.addRightImage(image: icon!, offset: 30)
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = .systemBlue
         button.layer.borderColor = UIColor.systemGreen.cgColor
         button.layer.shadowOpacity = 0.3
         button.layer.shadowColor = UIColor.systemGreen.cgColor
-        
         return button
     }()
     
-//    let faceDetection: BtnPleinLarge = {
-//        let button = BtnPleinLarge()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(buttonToFaceDetection(_:)), for: .touchUpInside)
-//        button.setTitle("Face detection", for: .normal)
+    let faceDetection: BtnPleinLarge = {
+        let button = BtnPleinLarge()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonToFaceDetection(_:)), for: .touchUpInside)
+        button.setTitle("Face detection", for: .normal)
 //        let icon = UIImage(systemName: "person.3.fill")?.resized(newSize: CGSize(width: 50, height: 25))
 //        button.addRightImage(image: icon!, offset: 30)
-//        button.backgroundColor = .systemOrange
-//        button.layer.borderColor = UIColor.systemOrange.cgColor
-//        button.layer.shadowOpacity = 0.3
-//        button.layer.shadowColor = UIColor.systemOrange.cgColor
-//
-//        return button
-//    }()
+        button.backgroundColor = .systemOrange
+        button.layer.borderColor = UIColor.systemOrange.cgColor
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowColor = UIColor.systemOrange.cgColor
+
+        return button
+    }()
 //
 //    let faceClassification: BtnPleinLarge = {
 //        let button = BtnPleinLarge()
@@ -90,7 +89,7 @@ class ViewController: UIViewController {
     
     func setupTabBar() {
             navigationController?.navigationBar.prefersLargeTitles = true
-            self.navigationItem.title = "Face AI"
+            self.navigationItem.title = "Anti Peep"
             if #available(iOS 13.0, *) {
                 self.navigationController?.navigationBar.barTintColor = .systemBackground
                  navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
@@ -129,7 +128,7 @@ class ViewController: UIViewController {
     private func setupButtons() {
         
         view.addSubview(faceMask)
-//        view.addSubview(faceDetection)
+        view.addSubview(faceDetection)
 //        view.addSubview(faceClassification)
 //        view.addSubview(objectDetection)
         
@@ -138,10 +137,10 @@ class ViewController: UIViewController {
         faceMask.heightAnchor.constraint(equalToConstant: 70).isActive = true
         faceMask.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-//        faceDetection.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        faceDetection.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
-//        faceDetection.heightAnchor.constraint(equalToConstant: 70).isActive = true
-//        faceDetection.topAnchor.constraint(equalTo: faceMask.bottomAnchor, constant: 30).isActive = true
+        faceDetection.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        faceDetection.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
+        faceDetection.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        faceDetection.topAnchor.constraint(equalTo: faceMask.bottomAnchor, constant: 30).isActive = true
 //        
 //        faceClassification.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 //        faceClassification.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
@@ -164,14 +163,14 @@ class ViewController: UIViewController {
         self.present(navController, animated: true, completion: nil)
     }
     
-//    @objc func buttonToFaceDetection(_ sender: BtnPleinLarge) {
-//           
-//       let controller = FaceDetectionViewController()
-//
-//       let navController = UINavigationController(rootViewController: controller)
-//       
-//       self.present(navController, animated: true, completion: nil)
-//    }
+    @objc func buttonToFaceDetection(_ sender: BtnPleinLarge) {
+           
+       let controller = FaceDetectionViewController()
+
+       let navController = UINavigationController(rootViewController: controller)
+       
+       self.present(navController, animated: true, completion: nil)
+    }
 //    
 //    @objc func buttonToFaceClassification(_ sender: BtnPleinLarge) {
 //           
