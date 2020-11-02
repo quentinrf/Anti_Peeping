@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB595554254FA2F8005F8528 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB595553254FA2F8005F8528 /* SettingsViewController.swift */; };
 		EBAE215B25223FF00071A7E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAE215A25223FF00071A7E9 /* AppDelegate.swift */; };
 		EBAE215D25223FF00071A7E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAE215C25223FF00071A7E9 /* SceneDelegate.swift */; };
 		EBAE215F25223FF00071A7E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAE215E25223FF00071A7E9 /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EB595553254FA2F8005F8528 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EBAE215725223FF00071A7E9 /* Anti_Peep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anti_Peep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBAE215A25223FF00071A7E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBAE215C25223FF00071A7E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				EBAE217825224A300071A7E9 /* FaceMaskViewController.swift */,
 				EBC181AA25226BE200BF8BE7 /* VideoCapture.swift */,
 				EBC711132534B5740023D20B /* FaceDetectionViewController.swift */,
+				EB595553254FA2F8005F8528 /* SettingsViewController.swift */,
 			);
 			path = Anti_Peep;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				EBC181BA252272D700BF8BE7 /* Button.swift in Sources */,
 				EBC181C5252272EB00BF8BE7 /* UIView+Extensions.swift in Sources */,
 				EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */,
+				EB595554254FA2F8005F8528 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

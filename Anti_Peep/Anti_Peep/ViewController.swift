@@ -24,13 +24,13 @@ class ViewController: UIViewController {
         let button = BtnPleinLarge()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonToFaceMask(_:)), for: .touchUpInside)
-        button.setTitle("Face mask", for: .normal)
+        button.setTitle("  Face mask", for: .normal)
         //let icon = UIImage(systemName: "eye")//?.resized(newSize: CGSize(width: 50, height: 30))
         //button.addRightImage(image: icon!, offset: 30)
-        button.backgroundColor = .systemBlue
-        button.layer.borderColor = UIColor.systemGreen.cgColor
+        button.backgroundColor = .systemTeal
+        button.layer.borderColor = UIColor.systemTeal.cgColor
         button.layer.shadowOpacity = 0.3
-        button.layer.shadowColor = UIColor.systemGreen.cgColor
+        button.layer.shadowColor = UIColor.systemTeal.cgColor
         return button
     }()
     
@@ -38,32 +38,28 @@ class ViewController: UIViewController {
         let button = BtnPleinLarge()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonToFaceDetection(_:)), for: .touchUpInside)
-        button.setTitle("Face detection", for: .normal)
-//        let icon = UIImage(systemName: "person.3.fill")?.resized(newSize: CGSize(width: 50, height: 25))
-//        button.addRightImage(image: icon!, offset: 30)
-        button.backgroundColor = .systemOrange
-        button.layer.borderColor = UIColor.systemOrange.cgColor
+        button.setTitle("  Face detection", for: .normal)
+        button.backgroundColor = .systemTeal
+        button.layer.borderColor = UIColor.systemTeal.cgColor
         button.layer.shadowOpacity = 0.3
-        button.layer.shadowColor = UIColor.systemOrange.cgColor
+        button.layer.shadowColor = UIColor.systemTeal.cgColor
 
         return button
     }()
-//
-//    let faceClassification: BtnPleinLarge = {
-//        let button = BtnPleinLarge()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(buttonToFaceClassification(_:)), for: .touchUpInside)
-//        button.setTitle("Face classification", for: .normal)
-//        let icon = UIImage(systemName: "tray.fill")?.resized(newSize: CGSize(width: 50, height: 40))
-//        button.addRightImage(image: icon!, offset: 30)
-//        button.backgroundColor = .systemBlue
-//        button.layer.borderColor = UIColor.systemBlue.cgColor
-//        button.layer.shadowOpacity = 0.3
-//        button.layer.shadowColor = UIColor.systemBlue.cgColor
-//
-//        return button
-//    }()
-//
+    
+    let settings: BtnPleinLarge = {
+        let button = BtnPleinLarge()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonToSettings(_:)), for: .touchUpInside)
+        button.setTitle("  Settings", for: .normal)
+        button.backgroundColor = .systemTeal
+        button.layer.borderColor = UIColor.systemTeal.cgColor
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowColor = UIColor.systemTeal.cgColor
+
+        return button
+    }()
+
 //    let objectDetection: BtnPleinLarge = {
 //        let button = BtnPleinLarge()
 //        button.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +125,7 @@ class ViewController: UIViewController {
         
         view.addSubview(faceMask)
         view.addSubview(faceDetection)
-//        view.addSubview(faceClassification)
+        view.addSubview(settings)
 //        view.addSubview(objectDetection)
         
         faceMask.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -141,11 +137,11 @@ class ViewController: UIViewController {
         faceDetection.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
         faceDetection.heightAnchor.constraint(equalToConstant: 70).isActive = true
         faceDetection.topAnchor.constraint(equalTo: faceMask.bottomAnchor, constant: 30).isActive = true
-//        
-//        faceClassification.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        faceClassification.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
-//        faceClassification.heightAnchor.constraint(equalToConstant: 70).isActive = true
-//        faceClassification.topAnchor.constraint(equalTo: faceDetection.bottomAnchor, constant: 30).isActive = true
+        
+        settings.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        settings.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
+        settings.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        settings.topAnchor.constraint(equalTo: faceDetection.bottomAnchor, constant: 30).isActive = true
 //        
 //        objectDetection.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 //        objectDetection.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
@@ -163,6 +159,8 @@ class ViewController: UIViewController {
         self.present(navController, animated: true, completion: nil)
     }
     
+    //Face Detection Button
+    
     @objc func buttonToFaceDetection(_ sender: BtnPleinLarge) {
            
        let controller = FaceDetectionViewController()
@@ -171,6 +169,20 @@ class ViewController: UIViewController {
        
        self.present(navController, animated: true, completion: nil)
     }
+    
+    //Settings Page Button
+    
+    @objc func buttonToSettings(_ sender: BtnPleinLarge) {
+           
+       let controller = SettingsViewController()
+
+       let navController = UINavigationController(rootViewController: controller)
+       
+       self.present(navController, animated: true, completion: nil)
+    }
+    
+    
+    
 //    
 //    @objc func buttonToFaceClassification(_ sender: BtnPleinLarge) {
 //           
