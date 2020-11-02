@@ -78,37 +78,37 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupTabBar()
+        //setupTabBar()
         setupLabel()
         setupButtons()
     }
     
-    func setupTabBar() {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            self.navigationItem.title = "Anti Peep"
-            if #available(iOS 13.0, *) {
-                self.navigationController?.navigationBar.barTintColor = .systemBackground
-                 navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
-            } else {
-                self.navigationController?.navigationBar.barTintColor = .lightText
-                navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
-            }
-            self.navigationController?.navigationBar.isHidden = false
-            self.setNeedsStatusBarAppearanceUpdate()
-            self.navigationItem.largeTitleDisplayMode = .automatic
-            self.navigationController?.navigationBar.barStyle = .default
-            if #available(iOS 13.0, *) {
-                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
-            } else {
-                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-            }
-            if #available(iOS 13.0, *) {
-                navigationController?.navigationBar.backgroundColor = .systemBackground
-            } else {
-                navigationController?.navigationBar.backgroundColor = .white
-            }
-            self.tabBarController?.tabBar.isHidden = false
-        }
+//    func setupTabBar() {
+//            navigationController?.navigationBar.prefersLargeTitles = true
+//            self.navigationItem.title = "Anti Peep"
+//            if #available(iOS 13.0, *) {
+//                self.navigationController?.navigationBar.barTintColor = .systemBackground
+//                 navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
+//            } else {
+//                self.navigationController?.navigationBar.barTintColor = .lightText
+//                navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+//            }
+//            self.navigationController?.navigationBar.isHidden = false
+//            self.setNeedsStatusBarAppearanceUpdate()
+//            self.navigationItem.largeTitleDisplayMode = .automatic
+//            self.navigationController?.navigationBar.barStyle = .default
+//            if #available(iOS 13.0, *) {
+//                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
+//            } else {
+//                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+//            }
+//            if #available(iOS 13.0, *) {
+//                navigationController?.navigationBar.backgroundColor = .systemBackground
+//            } else {
+//                navigationController?.navigationBar.backgroundColor = .white
+//            }
+//            self.tabBarController?.tabBar.isHidden = false
+//        }
         
         private func setupLabel() {
             view.addSubview(name)
