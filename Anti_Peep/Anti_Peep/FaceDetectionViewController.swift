@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVKit
 import Vision
+import Darwin
 
 class FaceDetectionViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
@@ -102,9 +103,13 @@ class FaceDetectionViewController: UIViewController, AVCaptureVideoDataOutputSam
             DispatchQueue.main.async {
                 if let results = req.results {
                     self.numberOfFaces.text = "\(results.count) face(s)"
+                    if results.count > 1 { UIScreen.main.brightness = CGFloat(0) }
+                    else { UIScreen.main.brightness = CGFloat(1) }
+//                    if results.count > 0 {
+//                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+//                    }
                 }
             }
-            
         }
         
         DispatchQueue.global(qos: .userInteractive).async {
