@@ -5,47 +5,126 @@
 //  Created by Quentin Roy-Foster on 2020-09-28.
 //  Copyright © 2020 XQProductions. All rights reserved.
 //
-
+import Foundation
 import UIKit
+import AVKit
+import Vision
+import Darwin
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    let name: UILabel = {
-           let text = UILabel()
-            text.translatesAutoresizingMaskIntoConstraints = false
-            text.font = UIFont(name: "Avenir-Heavy", size: 50)
-            text.text = "Anti Peep"
-            text.textColor = .label
-            return text
+    // FACE DETECTION
+    let numberOfFaces: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .clear
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .orange
+        label.font = UIFont(name: "Avenir-Heavy", size: 30)
+        label.text = "No face"
+        return label
+    }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTabBar()
+        setupCamera()
+        setupLabel()
+        setupButtons()
+    }
+    
+    func setupTabBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "Face Detection"
+        if #available(iOS 13.0, *) {
+            self.navigationController?.navigationBar.barTintColor = .systemBackground
+             navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
+        } else {
+            // Fallback on earlier versions
+            self.navigationController?.navigationBar.barTintColor = .lightText
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+        }
+        self.navigationController?.navigationBar.isHidden = false
+        self.setNeedsStatusBarAppearanceUpdate()
+        self.navigationItem.largeTitleDisplayMode = .automatic
+        self.navigationController?.navigationBar.barStyle = .default
+        if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
+        } else {
+            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+        }
+        if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            navigationController?.navigationBar.backgroundColor = .white
+        }
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    fileprivate func setupCamera() {
+        let captureSession = AVCaptureSession()
+        captureSession.sessionPreset = .high
+        
+        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else { return }
+        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
+        captureSession.addInput(input)
+        
+        captureSession.startRunning()
+        
+        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        view.layer.addSublayer(previewLayer)
+        previewLayer.frame = view.frame
+        
+        let dataOutput = AVCaptureVideoDataOutput()
+        dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
+        captureSession.addOutput(dataOutput)
+    }
+    
+    fileprivate func setupLabel() {
+        view.addSubview(numberOfFaces)
+        numberOfFaces.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
+        numberOfFaces.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        numberOfFaces.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        numberOfFaces.heightAnchor.constraint(equalToConstant: 80).isActive = true
+    }
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+        guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        let request = VNDetectFaceRectanglesRequest { (req, err) in
             
-        }()
+            if let err = err {
+                print("Failed to detect faces:", err)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if let results = req.results {
+                    self.numberOfFaces.text = "\(results.count) face(s)"
+                    if results.count > 0 { UIScreen.main.brightness = CGFloat(0) }
+                    else { UIScreen.main.brightness = CGFloat(1) }
+//                    if results.count > 0 {
+//                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+//                    }
+                }
+            }
+        }
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
+            do {
+                try handler.perform([request])
+            } catch let reqErr {
+                print("Failed to perform request:", reqErr)
+            }
+        }
+        
+    }
     
-    let faceMask: BtnPleinLarge = {
-        let button = BtnPleinLarge()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(buttonToFaceMask(_:)), for: .touchUpInside)
-        button.setTitle("  Face mask", for: .normal)
-        //let icon = UIImage(systemName: "eye")//?.resized(newSize: CGSize(width: 50, height: 30))
-        //button.addRightImage(image: icon!, offset: 30)
-        button.backgroundColor = .systemTeal
-        button.layer.borderColor = UIColor.systemTeal.cgColor
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowColor = UIColor.systemTeal.cgColor
-        return button
-    }()
-    
-    let faceDetection: BtnPleinLarge = {
-        let button = BtnPleinLarge()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(buttonToFaceDetection(_:)), for: .touchUpInside)
-        button.setTitle("  Face detection", for: .normal)
-        button.backgroundColor = .systemTeal
-        button.layer.borderColor = UIColor.systemTeal.cgColor
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowColor = UIColor.systemTeal.cgColor
-
-        return button
-    }()
+    // ORIGINAL
     
     let settings: BtnPleinLarge = {
         let button = BtnPleinLarge()
@@ -58,150 +137,47 @@ class ViewController: UIViewController {
         button.layer.shadowColor = UIColor.systemTeal.cgColor
 
         return button
-    }()
 
-//    let objectDetection: BtnPleinLarge = {
-//        let button = BtnPleinLarge()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(buttonToObjectDetection(_:)), for: .touchUpInside)
-//        button.setTitle("Object detection", for: .normal)
-//        let icon = UIImage(systemName: "crop")?.resized(newSize: CGSize(width: 50, height: 50))
-//        button.addRightImage(image: icon!, offset: 30)
-//        button.backgroundColor = .systemPurple
-//        button.layer.borderColor = UIColor.systemPurple.cgColor
-//        button.layer.shadowOpacity = 0.3
-//        button.layer.shadowColor = UIColor.systemPurple.cgColor
+//        let button = UIButton()
+//        //button.translatesAutoresizingMaskIntoConstraints = false
+//        button.addTarget(self, action: #selector(buttonToSettings(_:)), for: .touchUpInside)
+//        //button.setTitle("  Settings", for: .normal)
+//        //button.backgroundColor = .systemTeal
+//        //button.layer.borderColor = UIColor.systemTeal.cgColor
+//        //button.layer.shadowOpacity = 0.3
+//        //button.layer.shadowColor = UIColor.systemTeal.cgColor
 //
+//        let icon = UIImage(named: "icons8-settings-500")
+//        button.setImage(icon, for: .normal)
+//        //button.imageView?.contentMode = .scaleAspectFit
+//        //button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
 //        return button
-//    }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        //setupTabBar()
-        setupLabel()
-        setupButtons()
-    }
-    
-//    func setupTabBar() {
-//            navigationController?.navigationBar.prefersLargeTitles = true
-//            self.navigationItem.title = "Anti Peep"
-//            if #available(iOS 13.0, *) {
-//                self.navigationController?.navigationBar.barTintColor = .systemBackground
-//                 navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
-//            } else {
-//                self.navigationController?.navigationBar.barTintColor = .lightText
-//                navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
-//            }
-//            self.navigationController?.navigationBar.isHidden = false
-//            self.setNeedsStatusBarAppearanceUpdate()
-//            self.navigationItem.largeTitleDisplayMode = .automatic
-//            self.navigationController?.navigationBar.barStyle = .default
-//            if #available(iOS 13.0, *) {
-//                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
-//            } else {
-//                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-//            }
-//            if #available(iOS 13.0, *) {
-//                navigationController?.navigationBar.backgroundColor = .systemBackground
-//            } else {
-//                navigationController?.navigationBar.backgroundColor = .white
-//            }
-//            self.tabBarController?.tabBar.isHidden = false
-//        }
-        
-        private func setupLabel() {
-            view.addSubview(name)
-            name.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-            name.heightAnchor.constraint(equalToConstant: 100).isActive = true
-            name.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            name.numberOfLines = 1
-        }
-    
-    
-    
+    }()
     
     private func setupButtons() {
-        
-        view.addSubview(faceMask)
-        view.addSubview(faceDetection)
         view.addSubview(settings)
-//        view.addSubview(objectDetection)
+//        settings.centerXAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+//        settings.widthAnchor.constraint(equalToConstant: view.frame.width - 310).isActive = true
+//        settings.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        //settings.centerYAnchor.constraint(equalToConstant: 70).isActive = true
         
-        faceMask.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        faceMask.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
-        faceMask.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        faceMask.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        settings.translatesAutoresizingMaskIntoConstraints = false
+        let widthContraints =  NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: view.frame.width - 310)
         
-        faceDetection.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        faceDetection.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
-        faceDetection.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        faceDetection.topAnchor.constraint(equalTo: faceMask.bottomAnchor, constant: 30).isActive = true
+        let heightContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 50)
         
-        settings.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        settings.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
-        settings.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        settings.topAnchor.constraint(equalTo: faceDetection.bottomAnchor, constant: 30).isActive = true
-//        
-//        objectDetection.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        objectDetection.widthAnchor.constraint(equalToConstant: view.frame.width - 40).isActive = true
-//        objectDetection.heightAnchor.constraint(equalToConstant: 70).isActive = true
-//        objectDetection.topAnchor.constraint(equalTo: faceClassification.bottomAnchor, constant: 30).isActive = true
-    }
-    
-    
-    @objc func buttonToFaceMask(_ sender: BtnPleinLarge) {
+        let xContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.bottomMargin, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.bottomMargin, multiplier: 1, constant: -15)
         
-        let controller = FaceMaskViewController()
-
-        let navController = UINavigationController(rootViewController: controller)
+        let yContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -15)
+        NSLayoutConstraint.activate([heightContraints,widthContraints,xContraints,yContraints])
         
-        self.present(navController, animated: true, completion: nil)
-    }
-    
-    //Face Detection Button
-    
-    @objc func buttonToFaceDetection(_ sender: BtnPleinLarge) {
-           
-       let controller = FaceDetectionViewController()
-
-       let navController = UINavigationController(rootViewController: controller)
-       
-       self.present(navController, animated: true, completion: nil)
     }
     
     //Settings Page Button
-    
-    @objc func buttonToSettings(_ sender: BtnPleinLarge) {
-           
+    @objc func buttonToSettings(_ sender: UIButton) {
        let controller = SettingsViewController()
-
        let navController = UINavigationController(rootViewController: controller)
-       
        self.present(navController, animated: true, completion: nil)
     }
-    
-    
-    
-//    
-//    @objc func buttonToFaceClassification(_ sender: BtnPleinLarge) {
-//           
-//       let controller = FaceClassificationViewController()
-//
-//       let navController = UINavigationController(rootViewController: controller)
-//       
-//       self.present(navController, animated: true, completion: nil)
-//    }
-//    
-//    @objc func buttonToObjectDetection(_ sender: BtnPleinLarge) {
-//           
-//       let controller = ObjectDetectionViewController()
-//
-//       let navController = UINavigationController(rootViewController: controller)
-//       
-//       self.present(navController, animated: true, completion: nil)
-//    }
-
-
 }
 

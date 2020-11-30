@@ -29,21 +29,18 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
 enum ReactionaryOptions: Int, CaseIterable, SectionType {
     case reaction1
     case reaction2
-    case reaction3
     
     var containsSwitch: Bool {
         switch self {
         case .reaction1: return true
         case .reaction2: return true
-        case .reaction3: return true
         }
     }
     
     var description: String {
         switch self {
-        case .reaction1: return "Reactionary Measure 1"
-        case .reaction2: return "Reactionary Measure 2"
-        case .reaction3: return "Reactionary Measure 3"
+        case .reaction1: return "Close App Upon Detection"
+        case .reaction2: return "Dim Screen Upon Detection"
         }
     }
 }

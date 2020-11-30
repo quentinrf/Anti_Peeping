@@ -24,7 +24,7 @@ class UserInfoHeader: UIView {
     
     let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Tony Stark"
+        label.text = "Quentin Roy-Foster"
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -32,7 +32,7 @@ class UserInfoHeader: UIView {
     
     let emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "tony.stark@gmail.com"
+        label.text = "quentinrf@gmail.com"
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
         label.translatesAutoresizingMaskIntoConstraints = false
