@@ -32,6 +32,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         setupCamera()
         setupLabel()
         setupButtons()
+        setupToggle()
     }
     
 //    func setupTabBar() {
@@ -145,6 +146,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         return button
     }()
     
+    lazy var toggle: UISwitch = {
+        let toggle = UISwitch()
+        toggle.isOn = true
+        toggle.setOn(true, animated: false)
+        toggle.onTintColor = UIColor(red: 55/255, green: 120/255, blue: 250/255, alpha: 1)
+        toggle.translatesAutoresizingMaskIntoConstraints = false
+        toggle.addTarget(self, action: #selector(switchToOff), for: .valueChanged)
+        return toggle
+    }()
+    
     private func setupButtons() {
         view.addSubview(settings)
         settings.translatesAutoresizingMaskIntoConstraints = false
@@ -160,11 +171,29 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
     }
     
+    private func setupToggle() {
+        view.addSubview(toggle)
+        toggle.translatesAutoresizingMaskIntoConstraints = false
+        let widthContraints =  NSLayoutConstraint(item: toggle, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+            
+        let heightContraints = NSLayoutConstraint(item: toggle, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+        
+        let xContraints = NSLayoutConstraint(item: toggle, attribute: NSLayoutConstraint.Attribute.bottomMargin, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.bottomMargin, multiplier: 1, constant: -750)
+        
+        let yContraints = NSLayoutConstraint(item: toggle, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 10)
+        
+        NSLayoutConstraint.activate([heightContraints,widthContraints,xContraints,yContraints])
+        
+    }
     //Settings Page Button
     @objc func buttonToSettings(_ sender: UIButton) {
        let controller = SettingsViewController()
        let navController = UINavigationController(rootViewController: controller)
        self.present(navController, animated: true, completion: nil)
+    }
+    
+    @objc func switchToOff(_ sender: UISwitch) {
+       
     }
 }
 
