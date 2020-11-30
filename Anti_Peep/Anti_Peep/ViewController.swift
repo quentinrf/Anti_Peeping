@@ -14,55 +14,24 @@ import Darwin
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     // FACE DETECTION
-    let numberOfFaces: UILabel = {
+    var numberOfFaces: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .orange
+        label.textColor = .black
         label.font = UIFont(name: "Avenir-Heavy", size: 30)
-        label.text = "No face"
         return label
     }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupTabBar()
         setupCamera()
         setupLabel()
         setupButtons()
         setupToggle()
     }
-    
-//    func setupTabBar() {
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        self.navigationItem.title = "Face Detection"
-//        if #available(iOS 13.0, *) {
-//            self.navigationController?.navigationBar.barTintColor = .systemBackground
-//             navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
-//        } else {
-//            // Fallback on earlier versions
-//            self.navigationController?.navigationBar.barTintColor = .lightText
-//            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
-//        }
-//        self.navigationController?.navigationBar.isHidden = false
-//        self.setNeedsStatusBarAppearanceUpdate()
-//        self.navigationItem.largeTitleDisplayMode = .automatic
-//        self.navigationController?.navigationBar.barStyle = .default
-//        if #available(iOS 13.0, *) {
-//            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
-//        } else {
-//            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-//        }
-//        if #available(iOS 13.0, *) {
-//            navigationController?.navigationBar.backgroundColor = .systemBackground
-//        } else {
-//            // Fallback on earlier versions
-//            navigationController?.navigationBar.backgroundColor = .white
-//        }
-//        self.tabBarController?.tabBar.isHidden = false
-//    }
     
     fileprivate func setupCamera() {
         let captureSession = AVCaptureSession()
@@ -111,12 +80,15 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             
             DispatchQueue.main.async {
                 if let results = req.results {
-                    self.numberOfFaces.text = "\(results.count) face(s)"
-                    if results.count > 0 { UIScreen.main.brightness = CGFloat(0) }
-                    else { UIScreen.main.brightness = CGFloat(1) }
-//                    if results.count > 0 {
-//                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-//                    }
+                    if self.antipeep == true {
+                        self.numberOfFaces.text = "\(results.count) face(s)"
+                        if results.count > 0 { UIScreen.main.brightness = CGFloat(0) }
+                        else { UIScreen.main.brightness = CGFloat(1) }
+    //                    if results.count > 0 {
+    //                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    //                    }
+                    }
+                    
                 }
             }
         }
@@ -131,6 +103,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
         
     }
+    
+    var antipeep = true
     
 
     
@@ -193,7 +167,17 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     @objc func switchToOff(_ sender: UISwitch) {
-       
+        if toggle.isOn == true {
+            antipeep = true
+            numberOfFaces.textColor = .black
+            numberOfFaces.font = UIFont(name: "Avenir-Heavy", size: 30)
+        }
+        else if toggle.isOn == false {
+            antipeep = false
+            numberOfFaces.textColor = .red
+            numberOfFaces.text = "Face Detection off!"
+            numberOfFaces.font = UIFont(name: "Avenir-Heavy", size: 22)
+        }
     }
 }
 

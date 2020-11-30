@@ -45,7 +45,7 @@ class SettingsCell: UITableViewCell {
     
     // MARK: - Selectors
     @objc func handleSwitchAction(sender: UISwitch) {
-        if sender.isOn {
+        if switchControl.isOn {
             print("Turned On")
         }
         else {
