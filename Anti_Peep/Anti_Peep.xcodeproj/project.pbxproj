@@ -18,11 +18,6 @@
 		EBAE216725223FF10071A7E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBAE216525223FF10071A7E9 /* LaunchScreen.storyboard */; };
 		EBAE217925224A300071A7E9 /* FaceMaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAE217825224A300071A7E9 /* FaceMaskViewController.swift */; };
 		EBC181AB25226BE200BF8BE7 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181AA25226BE200BF8BE7 /* VideoCapture.swift */; };
-		EBC181B6252272D700BF8BE7 /* BtnVideLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181B0252272D700BF8BE7 /* BtnVideLarge.swift */; };
-		EBC181B7252272D700BF8BE7 /* BtnVide.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181B1252272D700BF8BE7 /* BtnVide.swift */; };
-		EBC181B8252272D700BF8BE7 /* BtnPleinLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181B3252272D700BF8BE7 /* BtnPleinLarge.swift */; };
-		EBC181B9252272D700BF8BE7 /* BtnPlein.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181B4252272D700BF8BE7 /* BtnPlein.swift */; };
-		EBC181BA252272D700BF8BE7 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181B5252272D700BF8BE7 /* Button.swift */; };
 		EBC181C5252272EB00BF8BE7 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181BF252272EB00BF8BE7 /* UIView+Extensions.swift */; };
 		EBC181C6252272EB00BF8BE7 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C0252272EB00BF8BE7 /* Date+Extension.swift */; };
 		EBC181C7252272EB00BF8BE7 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C1252272EB00BF8BE7 /* UIButton+Extension.swift */; };
@@ -46,11 +41,6 @@
 		EBAE216825223FF10071A7E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBAE217825224A300071A7E9 /* FaceMaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMaskViewController.swift; sourceTree = "<group>"; };
 		EBC181AA25226BE200BF8BE7 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
-		EBC181B0252272D700BF8BE7 /* BtnVideLarge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnVideLarge.swift; sourceTree = "<group>"; };
-		EBC181B1252272D700BF8BE7 /* BtnVide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnVide.swift; sourceTree = "<group>"; };
-		EBC181B3252272D700BF8BE7 /* BtnPleinLarge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnPleinLarge.swift; sourceTree = "<group>"; };
-		EBC181B4252272D700BF8BE7 /* BtnPlein.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnPlein.swift; sourceTree = "<group>"; };
-		EBC181B5252272D700BF8BE7 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		EBC181BF252272EB00BF8BE7 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		EBC181C0252272EB00BF8BE7 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		EBC181C1252272EB00BF8BE7 /* UIButton+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -91,7 +81,6 @@
 			isa = PBXGroup;
 			children = (
 				EBC181BD252272EB00BF8BE7 /* Utilities */,
-				EBC181AE252272D700BF8BE7 /* Buttons */,
 				EBAE215A25223FF00071A7E9 /* AppDelegate.swift */,
 				EBAE215C25223FF00071A7E9 /* SceneDelegate.swift */,
 				EBAE215E25223FF00071A7E9 /* ViewController.swift */,
@@ -107,35 +96,6 @@
 				EB59555C25506A1D005F8528 /* SettingsSection.swift */,
 			);
 			path = Anti_Peep;
-			sourceTree = "<group>";
-		};
-		EBC181AE252272D700BF8BE7 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				EBC181AF252272D700BF8BE7 /* BtnVide */,
-				EBC181B2252272D700BF8BE7 /* BtnPlein */,
-				EBC181B5252272D700BF8BE7 /* Button.swift */,
-			);
-			name = Buttons;
-			path = ../../../face_ai/face_ai/Buttons;
-			sourceTree = "<group>";
-		};
-		EBC181AF252272D700BF8BE7 /* BtnVide */ = {
-			isa = PBXGroup;
-			children = (
-				EBC181B0252272D700BF8BE7 /* BtnVideLarge.swift */,
-				EBC181B1252272D700BF8BE7 /* BtnVide.swift */,
-			);
-			path = BtnVide;
-			sourceTree = "<group>";
-		};
-		EBC181B2252272D700BF8BE7 /* BtnPlein */ = {
-			isa = PBXGroup;
-			children = (
-				EBC181B3252272D700BF8BE7 /* BtnPleinLarge.swift */,
-				EBC181B4252272D700BF8BE7 /* BtnPlein.swift */,
-			);
-			path = BtnPlein;
 			sourceTree = "<group>";
 		};
 		EBC181BD252272EB00BF8BE7 /* Utilities */ = {
@@ -234,17 +194,12 @@
 				EBC181AB25226BE200BF8BE7 /* VideoCapture.swift in Sources */,
 				EBC181C9252272EB00BF8BE7 /* UIColor+Extensions.swift in Sources */,
 				EBC181C8252272EB00BF8BE7 /* UIImage+Extension.swift in Sources */,
-				EBC181B9252272D700BF8BE7 /* BtnPlein.swift in Sources */,
 				EBC181C7252272EB00BF8BE7 /* UIButton+Extension.swift in Sources */,
 				EBAE215F25223FF00071A7E9 /* ViewController.swift in Sources */,
-				EBC181B8252272D700BF8BE7 /* BtnPleinLarge.swift in Sources */,
 				EBAE215B25223FF00071A7E9 /* AppDelegate.swift in Sources */,
 				EBC181C6252272EB00BF8BE7 /* Date+Extension.swift in Sources */,
 				EBAE217925224A300071A7E9 /* FaceMaskViewController.swift in Sources */,
 				EBAE215D25223FF00071A7E9 /* SceneDelegate.swift in Sources */,
-				EBC181B6252272D700BF8BE7 /* BtnVideLarge.swift in Sources */,
-				EBC181B7252272D700BF8BE7 /* BtnVide.swift in Sources */,
-				EBC181BA252272D700BF8BE7 /* Button.swift in Sources */,
 				EBC181C5252272EB00BF8BE7 /* UIView+Extensions.swift in Sources */,
 				EB59555725506244005F8528 /* SettingsCell.swift in Sources */,
 				EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */,

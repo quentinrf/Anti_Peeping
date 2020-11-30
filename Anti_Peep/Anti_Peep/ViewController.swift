@@ -28,40 +28,40 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+        //setupTabBar()
         setupCamera()
         setupLabel()
         setupButtons()
     }
     
-    func setupTabBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Face Detection"
-        if #available(iOS 13.0, *) {
-            self.navigationController?.navigationBar.barTintColor = .systemBackground
-             navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
-        } else {
-            // Fallback on earlier versions
-            self.navigationController?.navigationBar.barTintColor = .lightText
-            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
-        }
-        self.navigationController?.navigationBar.isHidden = false
-        self.setNeedsStatusBarAppearanceUpdate()
-        self.navigationItem.largeTitleDisplayMode = .automatic
-        self.navigationController?.navigationBar.barStyle = .default
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
-        } else {
-            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-        }
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            navigationController?.navigationBar.backgroundColor = .white
-        }
-        self.tabBarController?.tabBar.isHidden = false
-    }
+//    func setupTabBar() {
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        self.navigationItem.title = "Face Detection"
+//        if #available(iOS 13.0, *) {
+//            self.navigationController?.navigationBar.barTintColor = .systemBackground
+//             navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
+//        } else {
+//            // Fallback on earlier versions
+//            self.navigationController?.navigationBar.barTintColor = .lightText
+//            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+//        }
+//        self.navigationController?.navigationBar.isHidden = false
+//        self.setNeedsStatusBarAppearanceUpdate()
+//        self.navigationItem.largeTitleDisplayMode = .automatic
+//        self.navigationController?.navigationBar.barStyle = .default
+//        if #available(iOS 13.0, *) {
+//            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
+//        } else {
+//            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+//        }
+//        if #available(iOS 13.0, *) {
+//            navigationController?.navigationBar.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            navigationController?.navigationBar.backgroundColor = .white
+//        }
+//        self.tabBarController?.tabBar.isHidden = false
+//    }
     
     fileprivate func setupCamera() {
         let captureSession = AVCaptureSession()
@@ -74,6 +74,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         captureSession.startRunning()
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
         previewLayer.frame = view.frame
         
@@ -84,10 +85,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     fileprivate func setupLabel() {
         view.addSubview(numberOfFaces)
-        numberOfFaces.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
-        numberOfFaces.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        numberOfFaces.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        numberOfFaces.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        numberOfFaces.translatesAutoresizingMaskIntoConstraints = false
+        let widthContraints =  NSLayoutConstraint(item: numberOfFaces, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 200)
+            
+        let heightContraints = NSLayoutConstraint(item: numberOfFaces, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+        
+        let xContraints = NSLayoutConstraint(item: numberOfFaces, attribute: NSLayoutConstraint.Attribute.bottomMargin, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.bottomMargin, multiplier: 1, constant: -20)
+        
+        let yContraints = NSLayoutConstraint(item: numberOfFaces, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -200)
+        
+        NSLayoutConstraint.activate([heightContraints,widthContraints,xContraints,yContraints])
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -124,51 +131,31 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
     }
     
-    // ORIGINAL
+
     
-    let settings: BtnPleinLarge = {
-        let button = BtnPleinLarge()
+    let settings: UIButton = {
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonToSettings(_:)), for: .touchUpInside)
-        button.setTitle("  Settings", for: .normal)
-        button.backgroundColor = .systemTeal
-        button.layer.borderColor = UIColor.systemTeal.cgColor
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowColor = UIColor.systemTeal.cgColor
-
+        let icon = UIImage(named: "icons8-settings-500")
+        button.setImage(icon, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 10, right: 10)
+        //button.imageView?.contentMode = .scaleAspectFit
         return button
-
-//        let button = UIButton()
-//        //button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(buttonToSettings(_:)), for: .touchUpInside)
-//        //button.setTitle("  Settings", for: .normal)
-//        //button.backgroundColor = .systemTeal
-//        //button.layer.borderColor = UIColor.systemTeal.cgColor
-//        //button.layer.shadowOpacity = 0.3
-//        //button.layer.shadowColor = UIColor.systemTeal.cgColor
-//
-//        let icon = UIImage(named: "icons8-settings-500")
-//        button.setImage(icon, for: .normal)
-//        //button.imageView?.contentMode = .scaleAspectFit
-//        //button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
-//        return button
     }()
     
     private func setupButtons() {
         view.addSubview(settings)
-//        settings.centerXAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-//        settings.widthAnchor.constraint(equalToConstant: view.frame.width - 310).isActive = true
-//        settings.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        //settings.centerYAnchor.constraint(equalToConstant: 70).isActive = true
-        
         settings.translatesAutoresizingMaskIntoConstraints = false
-        let widthContraints =  NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: view.frame.width - 310)
+        let widthContraints =  NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+            
+        let heightContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
         
-        let heightContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 50)
+        let xContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.bottomMargin, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.bottomMargin, multiplier: 1, constant: -20)
         
-        let xContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.bottomMargin, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.bottomMargin, multiplier: 1, constant: -15)
+        let yContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -20)
         
-        let yContraints = NSLayoutConstraint(item: settings, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -15)
         NSLayoutConstraint.activate([heightContraints,widthContraints,xContraints,yContraints])
         
     }
