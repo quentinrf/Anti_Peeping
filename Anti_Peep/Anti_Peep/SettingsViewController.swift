@@ -24,36 +24,36 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-       // setupTabBar()
+        setupTabBar()
         configureUI()
     }
     
-//    func setupTabBar() {
-//            navigationController?.navigationBar.prefersLargeTitles = true
-//            self.navigationItem.title = "Settings"
-//            if #available(iOS 13.0, *) {
-//                self.navigationController?.navigationBar.barTintColor = .systemBackground
-//                 navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
-//            } else {
-//                self.navigationController?.navigationBar.barTintColor = .lightText
-//                navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
-//            }
-//            self.navigationController?.navigationBar.isHidden = false
-//            self.setNeedsStatusBarAppearanceUpdate()
-//            self.navigationItem.largeTitleDisplayMode = .automatic
-//            self.navigationController?.navigationBar.barStyle = .default
-//            if #available(iOS 13.0, *) {
-//                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
-//            } else {
-//                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-//            }
-//            if #available(iOS 13.0, *) {
-//                navigationController?.navigationBar.backgroundColor = .systemBackground
-//            } else {
-//                navigationController?.navigationBar.backgroundColor = .white
-//            }
-//            self.tabBarController?.tabBar.isHidden = false
-//        }
+    func setupTabBar() {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            self.navigationItem.title = "Settings"
+            if #available(iOS 13.0, *) {
+                self.navigationController?.navigationBar.barTintColor = .systemBackground
+                 navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.label]
+            } else {
+                self.navigationController?.navigationBar.barTintColor = .lightText
+                navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+            }
+            self.navigationController?.navigationBar.isHidden = false
+            self.setNeedsStatusBarAppearanceUpdate()
+            self.navigationItem.largeTitleDisplayMode = .automatic
+            self.navigationController?.navigationBar.barStyle = .default
+            if #available(iOS 13.0, *) {
+                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
+            } else {
+                navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+            }
+            if #available(iOS 13.0, *) {
+                navigationController?.navigationBar.backgroundColor = .systemBackground
+            } else {
+                navigationController?.navigationBar.backgroundColor = .white
+            }
+            self.tabBarController?.tabBar.isHidden = false
+        }
     
     // MARK: - Helper Functions
     
@@ -76,11 +76,11 @@ class SettingsViewController: UIViewController {
     func configureUI() {
         configureTableView()
         
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.barTintColor = UIColor(red: 55/255, green: 120/255, blue: 250/255, alpha: 1)
-        navigationItem.title = "Settings"
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.navigationBar.barStyle = .black
+//        navigationController?.navigationBar.barTintColor = UIColor(red: 55/255, green: 120/255, blue: 250/255, alpha: 1)
+//        navigationItem.title = "Settings"
     }
 }
 

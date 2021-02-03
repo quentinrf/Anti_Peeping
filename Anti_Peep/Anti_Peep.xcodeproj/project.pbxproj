@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB3278FC25B4E94F00EA1BAE /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3278FB25B4E94F00EA1BAE /* LaunchScreenViewController.swift */; };
 		EB595554254FA2F8005F8528 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB595553254FA2F8005F8528 /* SettingsViewController.swift */; };
 		EB59555725506244005F8528 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB59555625506244005F8528 /* SettingsCell.swift */; };
 		EB59555A255062CA005F8528 /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB595559255062CA005F8528 /* UserInfoHeader.swift */; };
@@ -25,9 +26,11 @@
 		EBC181C9252272EB00BF8BE7 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C3252272EB00BF8BE7 /* UIColor+Extensions.swift */; };
 		EBC181CA252272EB00BF8BE7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C4252272EB00BF8BE7 /* UIViewController+Extension.swift */; };
 		EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC711132534B5740023D20B /* FaceDetectionViewController.swift */; };
+		EBF5C9FE25C8BAB70052D2EE /* GazeCNN.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EBF5C9FD25C8BAB70052D2EE /* GazeCNN.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EB3278FB25B4E94F00EA1BAE /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		EB595553254FA2F8005F8528 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EB59555625506244005F8528 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		EB595559255062CA005F8528 /* UserInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		EBC181C3252272EB00BF8BE7 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		EBC181C4252272EB00BF8BE7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		EBC711132534B5740023D20B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
+		EBF5C9FD25C8BAB70052D2EE /* GazeCNN.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GazeCNN.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 		EBAE215925223FF00071A7E9 /* Anti_Peep */ = {
 			isa = PBXGroup;
 			children = (
+				EBF5C9FD25C8BAB70052D2EE /* GazeCNN.mlmodel */,
 				EBC181BD252272EB00BF8BE7 /* Utilities */,
 				EBAE215A25223FF00071A7E9 /* AppDelegate.swift */,
 				EBAE215C25223FF00071A7E9 /* SceneDelegate.swift */,
@@ -94,6 +99,7 @@
 				EB59555625506244005F8528 /* SettingsCell.swift */,
 				EB595559255062CA005F8528 /* UserInfoHeader.swift */,
 				EB59555C25506A1D005F8528 /* SettingsSection.swift */,
+				EB3278FB25B4E94F00EA1BAE /* LaunchScreenViewController.swift */,
 			);
 			path = Anti_Peep;
 			sourceTree = "<group>";
@@ -193,6 +199,7 @@
 				EBC181CA252272EB00BF8BE7 /* UIViewController+Extension.swift in Sources */,
 				EBC181AB25226BE200BF8BE7 /* VideoCapture.swift in Sources */,
 				EBC181C9252272EB00BF8BE7 /* UIColor+Extensions.swift in Sources */,
+				EB3278FC25B4E94F00EA1BAE /* LaunchScreenViewController.swift in Sources */,
 				EBC181C8252272EB00BF8BE7 /* UIImage+Extension.swift in Sources */,
 				EBC181C7252272EB00BF8BE7 /* UIButton+Extension.swift in Sources */,
 				EBAE215F25223FF00071A7E9 /* ViewController.swift in Sources */,
@@ -203,6 +210,7 @@
 				EBC181C5252272EB00BF8BE7 /* UIView+Extensions.swift in Sources */,
 				EB59555725506244005F8528 /* SettingsCell.swift in Sources */,
 				EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */,
+				EBF5C9FE25C8BAB70052D2EE /* GazeCNN.mlmodel in Sources */,
 				EB595554254FA2F8005F8528 /* SettingsViewController.swift in Sources */,
 				EB59555A255062CA005F8528 /* UserInfoHeader.swift in Sources */,
 			);
