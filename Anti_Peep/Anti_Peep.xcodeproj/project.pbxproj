@@ -26,6 +26,9 @@
 		EBC181C9252272EB00BF8BE7 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C3252272EB00BF8BE7 /* UIColor+Extensions.swift */; };
 		EBC181CA252272EB00BF8BE7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC181C4252272EB00BF8BE7 /* UIViewController+Extension.swift */; };
 		EBC711142534B5740023D20B /* FaceDetectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC711132534B5740023D20B /* FaceDetectionViewController.swift */; };
+		EBC745D825EC54B500149B7D /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC745D725EC54B500149B7D /* SettingsPageViewController.swift */; };
+		EBC745DB25EC59F200149B7D /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC745DA25EC59F200149B7D /* SettingTableViewCell.swift */; };
+		EBC745DE25EC687200149B7D /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC745DD25EC687200149B7D /* SwitchTableViewCell.swift */; };
 		EBF5C9FE25C8BAB70052D2EE /* GazeCNN.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = EBF5C9FD25C8BAB70052D2EE /* GazeCNN.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +54,9 @@
 		EBC181C3252272EB00BF8BE7 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		EBC181C4252272EB00BF8BE7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		EBC711132534B5740023D20B /* FaceDetectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewController.swift; sourceTree = "<group>"; };
+		EBC745D725EC54B500149B7D /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
+		EBC745DA25EC59F200149B7D /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		EBC745DD25EC687200149B7D /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		EBF5C9FD25C8BAB70052D2EE /* GazeCNN.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GazeCNN.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,9 +103,12 @@
 				EBC711132534B5740023D20B /* FaceDetectionViewController.swift */,
 				EB595553254FA2F8005F8528 /* SettingsViewController.swift */,
 				EB59555625506244005F8528 /* SettingsCell.swift */,
+				EBC745D725EC54B500149B7D /* SettingsPageViewController.swift */,
 				EB595559255062CA005F8528 /* UserInfoHeader.swift */,
 				EB59555C25506A1D005F8528 /* SettingsSection.swift */,
 				EB3278FB25B4E94F00EA1BAE /* LaunchScreenViewController.swift */,
+				EBC745DA25EC59F200149B7D /* SettingTableViewCell.swift */,
+				EBC745DD25EC687200149B7D /* SwitchTableViewCell.swift */,
 			);
 			path = Anti_Peep;
 			sourceTree = "<group>";
@@ -197,12 +206,15 @@
 			files = (
 				EB59555D25506A1D005F8528 /* SettingsSection.swift in Sources */,
 				EBC181CA252272EB00BF8BE7 /* UIViewController+Extension.swift in Sources */,
+				EBC745DE25EC687200149B7D /* SwitchTableViewCell.swift in Sources */,
 				EBC181AB25226BE200BF8BE7 /* VideoCapture.swift in Sources */,
 				EBC181C9252272EB00BF8BE7 /* UIColor+Extensions.swift in Sources */,
 				EB3278FC25B4E94F00EA1BAE /* LaunchScreenViewController.swift in Sources */,
 				EBC181C8252272EB00BF8BE7 /* UIImage+Extension.swift in Sources */,
+				EBC745DB25EC59F200149B7D /* SettingTableViewCell.swift in Sources */,
 				EBC181C7252272EB00BF8BE7 /* UIButton+Extension.swift in Sources */,
 				EBAE215F25223FF00071A7E9 /* ViewController.swift in Sources */,
+				EBC745D825EC54B500149B7D /* SettingsPageViewController.swift in Sources */,
 				EBAE215B25223FF00071A7E9 /* AppDelegate.swift in Sources */,
 				EBC181C6252272EB00BF8BE7 /* Date+Extension.swift in Sources */,
 				EBAE217925224A300071A7E9 /* FaceMaskViewController.swift in Sources */,

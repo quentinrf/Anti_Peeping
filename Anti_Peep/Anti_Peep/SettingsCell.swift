@@ -22,8 +22,8 @@ class SettingsCell: UITableViewCell {
     
     lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
-        //switchControl.isOn = true
-        switchControl.setOn(true, animated: false)
+        switchControl.isOn = true
+        //switchControl.setOn(false, animated: false)
         switchControl.onTintColor = UIColor(red: 55/255, green: 120/255, blue: 250/255, alpha: 1)
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         switchControl.addTarget(self, action: #selector(handleSwitchAction), for: .valueChanged)
@@ -45,11 +45,13 @@ class SettingsCell: UITableViewCell {
     
     // MARK: - Selectors
     @objc func handleSwitchAction(sender: UISwitch) {
-        if switchControl.isOn {
+        if sender.isOn {
             print("Turned On")
+            sender.isOn = true
         }
         else {
             print("Turned Off")
+            sender.isOn = false
         }
     }
 }

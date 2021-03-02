@@ -16,13 +16,22 @@ import AVFoundation
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     // --------------------------------------------------
-    // ----------------- CAMERA SECTION -----------------
+    // ----------------- ADMIN SECTION -----------------
     // --------------------------------------------------
+    
+    private let captureSession = AVCaptureSession()
+    private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+    private let videoDataOutput = AVCaptureVideoDataOutput()
+    private var drawings: [CAShapeLayer] = []
     
     
     override func viewDidLoad() {
         //call the parent function
         super.viewDidLoad()
+       // self.addCameraInput()
+        //self.showCameraFeed()
+        //self.getCameraFrames()
+       // self.captureSession.startRunning()
         
         //establish the capture session and add label
         setupCamera()
@@ -32,6 +41,15 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         setupButtons()
         setupToggle()
     }
+    
+    override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            self.previewLayer.frame = self.view.frame
+        }
+    
+    // --------------------------------------------------
+    // ----------------- CAMERA SECTION -----------------
+    // --------------------------------------------------
     
     fileprivate func setupCamera() {
         let captureSession = AVCaptureSession()
@@ -52,55 +70,165 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
         captureSession.addOutput(dataOutput)
     }
-    
+    // LANDMARK DETECTION SECTION
     
     // CAPTURE OUTPUT FOR LANDMARK DETECTION
-    func captureOutput(
-            _ output: AVCaptureOutput,
-            didOutput sampleBuffer: CMSampleBuffer,
-            from connection: AVCaptureConnection) {
-            
-            guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-                debugPrint("unable to get image from sample buffer")
-                return
+//    func captureOutput(
+//            _ output: AVCaptureOutput,
+//            didOutput sampleBuffer: CMSampleBuffer,
+//            from connection: AVCaptureConnection) {
+//
+//            guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+//                debugPrint("unable to get image from sample buffer")
+//                return
+//            }
+//            self.detectFace(in: frame)
+//        }
+    
+    
+    private func addCameraInput() {
+            guard let device = AVCaptureDevice.DiscoverySession(
+                deviceTypes: [.builtInWideAngleCamera, .builtInDualCamera, .builtInTrueDepthCamera],
+                mediaType: .video,
+                position: .front).devices.first else {
+                    fatalError("No back camera device found, please make sure to run SimpleLaneDetection in an iOS device and not a simulator")
             }
-            self.detectFace(in: frame)
+            let cameraInput = try! AVCaptureDeviceInput(device: device)
+            self.captureSession.addInput(cameraInput)
+        }
+    
+    private func showCameraFeed() {
+            self.previewLayer.videoGravity = .resizeAspectFill
+            self.view.layer.addSublayer(self.previewLayer)
+            self.previewLayer.frame = self.view.frame
+        }
+    
+    private func getCameraFrames() {
+            self.videoDataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString) : NSNumber(value: kCVPixelFormatType_32BGRA)] as [String : Any]
+            self.videoDataOutput.alwaysDiscardsLateVideoFrames = true
+            self.videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "camera_frame_processing_queue"))
+            self.captureSession.addOutput(self.videoDataOutput)
+            guard let connection = self.videoDataOutput.connection(with: AVMediaType.video),
+                connection.isVideoOrientationSupported else { return }
+            connection.videoOrientation = .portrait
+        }
+    
+    private func detectFace(in image: CVPixelBuffer) {
+            let faceDetectionRequest = VNDetectFaceLandmarksRequest(completionHandler: { (request: VNRequest, error: Error?) in
+                DispatchQueue.main.async {
+                    if let results = request.results as? [VNFaceObservation] {
+                        self.handleFaceDetectionResults(results)
+                    } else {
+                        self.clearDrawings()
+                    }
+                }
+            })
+            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: image, orientation: .leftMirrored, options: [:])
+            try? imageRequestHandler.perform([faceDetectionRequest])
+        }
+    
+    private func handleFaceDetectionResults(_ observedFaces: [VNFaceObservation]) {
+            
+            self.clearDrawings()
+            let facesBoundingBoxes: [CAShapeLayer] = observedFaces.flatMap({ (observedFace: VNFaceObservation) -> [CAShapeLayer] in
+                let faceBoundingBoxOnScreen = self.previewLayer.layerRectConverted(fromMetadataOutputRect: observedFace.boundingBox)
+                let faceBoundingBoxPath = CGPath(rect: faceBoundingBoxOnScreen, transform: nil)
+                let faceBoundingBoxShape = CAShapeLayer()
+                faceBoundingBoxShape.path = faceBoundingBoxPath
+                faceBoundingBoxShape.fillColor = UIColor.clear.cgColor
+                faceBoundingBoxShape.strokeColor = UIColor.green.cgColor
+                var newDrawings = [CAShapeLayer]()
+                newDrawings.append(faceBoundingBoxShape)
+                if let landmarks = observedFace.landmarks {
+                    newDrawings = newDrawings + self.drawFaceFeatures(landmarks, screenBoundingBox: faceBoundingBoxOnScreen)
+                }
+                return newDrawings
+            })
+            facesBoundingBoxes.forEach({ faceBoundingBox in self.view.layer.addSublayer(faceBoundingBox) })
+            self.drawings = facesBoundingBoxes
+        }
+    
+    private func clearDrawings() {
+            self.drawings.forEach({ drawing in drawing.removeFromSuperlayer() })
+        }
+    
+    private func drawFaceFeatures(_ landmarks: VNFaceLandmarks2D, screenBoundingBox: CGRect) -> [CAShapeLayer] {
+            var faceFeaturesDrawings: [CAShapeLayer] = []
+            if let leftEye = landmarks.leftEye {
+                let eyeDrawing = self.drawEye(leftEye, screenBoundingBox: screenBoundingBox)
+                faceFeaturesDrawings.append(eyeDrawing)
+            }
+            if let rightEye = landmarks.rightEye {
+                let eyeDrawing = self.drawEye(rightEye, screenBoundingBox: screenBoundingBox)
+                faceFeaturesDrawings.append(eyeDrawing)
+            }
+            // draw other face features here
+            return faceFeaturesDrawings
+        }
+    
+    private func drawEye(_ eye: VNFaceLandmarkRegion2D, screenBoundingBox: CGRect) -> CAShapeLayer {
+            let eyePath = CGMutablePath()
+            let eyePathPoints = eye.normalizedPoints
+                .map({ eyePoint in
+                    CGPoint(
+                        x: eyePoint.y * screenBoundingBox.height + screenBoundingBox.origin.x,
+                        y: eyePoint.x * screenBoundingBox.width + screenBoundingBox.origin.y)
+                })
+            eyePath.addLines(between: eyePathPoints)
+            eyePath.closeSubpath()
+            let eyeDrawing = CAShapeLayer()
+            eyeDrawing.path = eyePath
+            eyeDrawing.fillColor = UIColor.clear.cgColor
+            eyeDrawing.strokeColor = UIColor.green.cgColor
+            
+            return eyeDrawing
         }
     
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // captureOutput function for normal Vision face detection
-//    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-//        guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-//
-//        let request = VNDetectFaceRectanglesRequest { (req, err) in
-//            if let err = err {
-//                print("Failed to detect faces:", err)
-//                return
-//            }
-//            DispatchQueue.main.async {
-//                if let results = req.results {
-//                    if self.antipeep == true {
-//                        self.faceCountFD.text = "\(results.count) face(s)"
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+
+        let request = VNDetectFaceRectanglesRequest { (req, err) in
+            if let err = err {
+                print("Failed to detect faces:", err)
+                return
+            }
+            DispatchQueue.main.async {
+                if let results = req.results {
+                    if self.antipeep == true {
+                        self.faceCountFD.text = "\(results.count) face(s)"
 //                        if results.count > 0 { UIScreen.main.brightness = CGFloat(0) }
 //                        else { UIScreen.main.brightness = CGFloat(1) }
-//    //                    if results.count > 0 {
-//    //                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-//    //                    }
-//                    }
-//                }
-//            }
-//        }
-//        DispatchQueue.global(qos: .userInteractive).async {
-//            let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
-//            do {
-//                try handler.perform([request])
-//            } catch let reqErr {
-//                print("Failed to perform request:", reqErr)
-//            }
-//        }
-//    }
+    //                    if results.count > 0 {
+    //                        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    //                    }
+                    }
+                }
+            }
+        }
+        DispatchQueue.global(qos: .userInteractive).async {
+            let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
+            do {
+                try handler.perform([request])
+            } catch let reqErr {
+                print("Failed to perform request:", reqErr)
+            }
+        }
+    }
     
     // captureOutput function for CoreML
 //    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -145,7 +273,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         label.backgroundColor = .clear
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .lightText
         label.font = UIFont(name: "Avenir-Heavy", size: 30)
         return label
     }()
@@ -170,13 +298,20 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonToSettings(_:)), for: .touchUpInside)
-        let icon = UIImage(named: "icons8-settings-500")
+        let icon = UIImage(systemName: "gear")
         button.setImage(icon, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 10, right: 10)
+        //button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 10, right: 10)
         //button.imageView?.contentMode = .scaleAspectFit
+        
+        
+        
+        
+        
         return button
     }()
+    
+
     
    // toggle switch used to
    // turn anti-peep on/off
@@ -246,7 +381,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     // settings page navigation function
     @objc func buttonToSettings(_ sender: UIButton) {
-       let controller = SettingsViewController()
+       let controller = SettingsPageViewController()
        let navController = UINavigationController(rootViewController: controller)
        self.present(navController, animated: true, completion: nil)
     }
