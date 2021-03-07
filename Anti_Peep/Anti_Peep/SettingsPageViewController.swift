@@ -65,7 +65,7 @@ class SettingsPageViewController: UIViewController, UITableViewDelegate, UITable
                 
             }, isOn: true)),
             .switchCell(model: SettingsSwitchOption(title: "Toggle Gaze Detection", icon: UIImage(systemName: "eye"), iconBackgroundColor: .link, handler: {
-                
+                self.test()
             }, isOn: true)),
     ]))
         models.append(Section(title: "Reactionary Measures", options: [
@@ -84,6 +84,11 @@ class SettingsPageViewController: UIViewController, UITableViewDelegate, UITable
     ]))
     }
     
+    func test(){
+        print("helloworld")
+    }
+    
+
     func setupTitle() {
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Settings"

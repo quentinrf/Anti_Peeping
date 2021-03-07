@@ -47,7 +47,7 @@ class TransformVisualization: NSObject, VirtualContentController {
     }
     
     func update(withFaceAnchor anchor: ARFaceAnchor){
-        print(anchor.rightEyeTransform)
+        print(anchor.lookAtPoint)
         matrix = anchor.rightEyeTransform
         //print(anchor.leftEyeTransform)
     }
