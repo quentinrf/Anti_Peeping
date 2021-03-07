@@ -60,11 +60,19 @@ class SettingsPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func configure() {
+        models.append(Section(title: "System Control", options: [
+            .switchCell(model: SettingsSwitchOption(title: "Toggle Face Detection", icon: UIImage(systemName: "person.crop.circle.badge.exclam"), iconBackgroundColor: .systemPink, handler: {
+                
+            }, isOn: true)),
+            .switchCell(model: SettingsSwitchOption(title: "Toggle Gaze Detection", icon: UIImage(systemName: "eye"), iconBackgroundColor: .link, handler: {
+                
+            }, isOn: true)),
+    ]))
         models.append(Section(title: "Reactionary Measures", options: [
             .switchCell(model: SettingsSwitchOption(title: "Close Application", icon: UIImage(systemName: "power"), iconBackgroundColor: .systemRed, handler: {
                     
             }, isOn: true)),
-            .switchCell(model: SettingsSwitchOption(title: "Flash Screen Brightness", icon: UIImage(systemName: "eye.slash"), iconBackgroundColor: .systemOrange, handler: {
+            .switchCell(model: SettingsSwitchOption(title: "Flash Screen Brightness", icon: UIImage(systemName: "sunset"), iconBackgroundColor: .systemOrange, handler: {
                     
             }, isOn: true)),
     ]))

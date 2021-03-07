@@ -55,6 +55,8 @@ class TransformViewController: UIViewController, ARSessionDelegate {
             sceneView.delegate = self
             sceneView.session.delegate = self
             sceneView.automaticallyUpdatesLighting = true
+            setupLabel()
+            //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshLbl:", name: "refresh", object: nil)
         
 //            guard ARFaceTrackingConfiguration.isSupported else { return }
 //            let configuration = ARFaceTrackingConfiguration()
@@ -64,6 +66,12 @@ class TransformViewController: UIViewController, ARSessionDelegate {
             //tabBar.selectedItem = tabBar.items!.first!
             selectedVirtualContent = VirtualContentType(rawValue: 0)
         }
+    
+//    func refreshLbl(notification: NSNotification) {
+//
+//        print("Received Notification")
+//        faceCountFD.text = "NilNILNILNILNILNIL"
+//    }
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +83,33 @@ class TransformViewController: UIViewController, ARSessionDelegate {
         
         // "Reset" to run the AR session for the first time.
         resetTracking()
+    }
+    
+    // Face Detection Face Count UI Label
+    let faceCountFD: UILabel = {
+        let label = UILabel()
+        label.text = "hellohellohellohellohellovhello"
+        label.backgroundColor = .clear
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .lightText
+        label.font = UIFont(name: "Avenir-Heavy", size: 30)
+        return label
+    }()
+    
+    
+    fileprivate func setupLabel() {
+        view.addSubview(faceCountFD)
+        faceCountFD.translatesAutoresizingMaskIntoConstraints = false
+        let widthContraints =  NSLayoutConstraint(item: faceCountFD, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 200)
+            
+        let heightContraints = NSLayoutConstraint(item: faceCountFD, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+        
+        let xContraints = NSLayoutConstraint(item: faceCountFD, attribute: NSLayoutConstraint.Attribute.bottomMargin, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.bottomMargin, multiplier: 1, constant: -20)
+        
+        let yContraints = NSLayoutConstraint(item: faceCountFD, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -200)
+        
+        NSLayoutConstraint.activate([heightContraints,widthContraints,xContraints,yContraints])
     }
     
     
@@ -118,13 +153,13 @@ class TransformViewController: UIViewController, ARSessionDelegate {
     }
 }
 
-//extension TransformViewController: UITabBarDelegate {
-//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        guard let contentType = VirtualContentType(rawValue: item.tag)
-//            else { fatalError("unexpected virtual content tag") }
-//        selectedVirtualContent = contentType
-//    }
-//}
+extension TransformViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard let contentType = VirtualContentType(rawValue: 0)
+            else { fatalError("unexpected virtual content tag") }
+        selectedVirtualContent = contentType
+    }
+}
 
 
 extension TransformViewController: ARSCNViewDelegate {
@@ -135,7 +170,7 @@ extension TransformViewController: ARSCNViewDelegate {
         
         // If this is the first time with this anchor, get the controller to create content.
         // Otherwise (switching content), will change content when setting `selectedVirtualContent`.
-        if node.childNodes.isEmpty, let contentNode = TransformVisualization().renderer(renderer, nodeFor: faceAnchor) {
+        if node.childNodes.isEmpty, let contentNode = selectedContentController.renderer(renderer, nodeFor: faceAnchor) {
             node.addChildNode(contentNode)
         }
     }
@@ -143,10 +178,10 @@ extension TransformViewController: ARSCNViewDelegate {
     /// - Tag: ARFaceGeometryUpdate
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard anchor == currentFaceAnchor,
-            let contentNode = TransformVisualization().contentNode,
+            let contentNode = selectedContentController.contentNode,
             contentNode.parent == node
             else { return }
         
-        TransformVisualization().renderer(renderer, didUpdate: contentNode, for: anchor)
+        selectedContentController.renderer(renderer, didUpdate: contentNode, for: anchor)
     }
 }

@@ -10,6 +10,9 @@ import SceneKit
 
 class TransformVisualization: NSObject, VirtualContentController {
     
+    
+    var matrix: simd_float4x4?
+    
     var contentNode: SCNNode?
     
     // Load multiple copies of the axis origin visualization for the transforms this class visualizes.
@@ -22,23 +25,9 @@ class TransformVisualization: NSObject, VirtualContentController {
         guard anchor is ARFaceAnchor else { return nil }
         
         // Load an asset from the app bundle to provide visual content for the anchor.
-        contentNode = SCNReferenceNode(named: "coordinateOrigin")
+        contentNode = SCNReferenceNode()
         
-        guard #available(iOS 12.0, *), let faceAnchor = anchor as? ARFaceAnchor
-            else { return nil}
-        
-        rightEyeNode.simdTransform = faceAnchor.rightEyeTransform
-        leftEyeNode.simdTransform = faceAnchor.leftEyeTransform
-        
-        guard #available(iOS 12.0, *), let anchorNode = contentNode else { return nil }
-        
-        // Scale down the coordinate axis visualizations for eyes.
-        rightEyeNode.simdPivot = simd_float4x4(diagonal: SIMD4(3,3,3,1))
-        leftEyeNode.simdPivot = simd_float4x4(diagonal: SIMD4(3,3,3,1))
-        
-        anchorNode.addChildNode(rightEyeNode)
-        anchorNode.addChildNode(leftEyeNode)
-        
+        self.addEyeTransformNodes()
         
         // Provide the node to ARKit for keeping in sync with the face anchor.
         return contentNode
@@ -50,6 +39,17 @@ class TransformVisualization: NSObject, VirtualContentController {
         
         rightEyeNode.simdTransform = faceAnchor.rightEyeTransform
         leftEyeNode.simdTransform = faceAnchor.leftEyeTransform
+        update(withFaceAnchor: faceAnchor)
+        
+        //let text = TransformViewController.faceCountFD
+        //TransformViewController().faceCountFD.text = "from other file"
+        //faceCountFD.text = "\(results.count) face(s)"
+    }
+    
+    func update(withFaceAnchor anchor: ARFaceAnchor){
+        print(anchor.rightEyeTransform)
+        matrix = anchor.rightEyeTransform
+        //print(anchor.leftEyeTransform)
     }
     
     func addEyeTransformNodes() {
