@@ -8,8 +8,13 @@ Displays coordinate axes visualizing the tracked face pose (and eyes in iOS 12).
 import ARKit
 import SceneKit
 
+protocol eyeDataDelegate {
+    func getLookAtPoint(lookAtPoint: simd_float3)
+}
+
 class TransformVisualization: NSObject, VirtualContentController {
     
+    var delegate: eyeDataDelegate?
     
     var matrix: simd_float4x4?
     
@@ -36,10 +41,11 @@ class TransformVisualization: NSObject, VirtualContentController {
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
         guard #available(iOS 12.0, *), let faceAnchor = anchor as? ARFaceAnchor
             else { return }
+        update(withFaceAnchor: faceAnchor)
+        
         
         rightEyeNode.simdTransform = faceAnchor.rightEyeTransform
         leftEyeNode.simdTransform = faceAnchor.leftEyeTransform
-        update(withFaceAnchor: faceAnchor)
         
         //let text = TransformViewController.faceCountFD
         //TransformViewController().faceCountFD.text = "from other file"
@@ -47,7 +53,16 @@ class TransformVisualization: NSObject, VirtualContentController {
     }
     
     func update(withFaceAnchor anchor: ARFaceAnchor){
-        print(anchor.lookAtPoint)
+        delegate?.getLookAtPoint(lookAtPoint: anchor.lookAtPoint)
+        //-0.028 - 0.028
+        if (anchor.lookAtPoint.x > -0.050 && anchor.lookAtPoint.x < 0.050 && anchor.lookAtPoint.y > -0.15 && anchor.lookAtPoint.y < 0.15){
+            print("looking")
+        }
+        else {
+            print("NOT LOOKING")
+        }
+        
+        //print(anchor.lookAtPoint)
         matrix = anchor.rightEyeTransform
         //print(anchor.leftEyeTransform)
     }

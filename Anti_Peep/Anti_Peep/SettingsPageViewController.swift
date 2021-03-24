@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol settingsToggleDelegate {
+    func toggleBrightnessReaction()
+    func toggleExitAppReaction(isOn: Bool)
+}
 
 struct Section {
     let title: String
@@ -38,6 +42,12 @@ struct SettingsOption {
 }
 
 class SettingsPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var brightToggleIsOn = true
+    var offToggleIsOn = true
+    
+    var delegate: settingsToggleDelegate?
+    
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
@@ -60,21 +70,13 @@ class SettingsPageViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func configure() {
-        models.append(Section(title: "System Control", options: [
-            .switchCell(model: SettingsSwitchOption(title: "Toggle Face Detection", icon: UIImage(systemName: "person.crop.circle.badge.exclam"), iconBackgroundColor: .systemPink, handler: {
-                
-            }, isOn: true)),
-            .switchCell(model: SettingsSwitchOption(title: "Toggle Gaze Detection", icon: UIImage(systemName: "eye"), iconBackgroundColor: .link, handler: {
-                self.test()
-            }, isOn: true)),
-    ]))
         models.append(Section(title: "Reactionary Measures", options: [
             .switchCell(model: SettingsSwitchOption(title: "Close Application", icon: UIImage(systemName: "power"), iconBackgroundColor: .systemRed, handler: {
-                    
-            }, isOn: true)),
+                self.setOffToggle()
+            }, isOn: false)),
             .switchCell(model: SettingsSwitchOption(title: "Flash Screen Brightness", icon: UIImage(systemName: "sunset"), iconBackgroundColor: .systemOrange, handler: {
-                    
-            }, isOn: true)),
+                self.delegate?.toggleBrightnessReaction()
+            }, isOn: false)),
     ]))
         models.append(Section(title: "Reporting Section", options: [
             .staticCell(model: SettingsOption(title: "Report a Shoulder Peeper", icon: UIImage(systemName: "hand.raised"), iconBackgroundColor: .systemPink){
@@ -84,8 +86,15 @@ class SettingsPageViewController: UIViewController, UITableViewDelegate, UITable
     ]))
     }
     
-    func test(){
-        print("helloworld")
+    func setBrightToggle(){
+        //models[1].options[1].self.
+        //brightToggleIsOn.toggle()
+        //delegate?.toggleBrightnessReaction(isOn: models[0].options[1])
+    }
+    func setOffToggle(){
+        //offToggleIsOn.toggle()
+      //  print(offToggleIsOn)
+       // delegate?.toggleExitAppReaction(isOn: offToggleIsOn)
     }
     
 
@@ -132,8 +141,6 @@ class SettingsPageViewController: UIViewController, UITableViewDelegate, UITable
             cell.configure(with: model)
             return cell
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		EB349B0C25F2B40F00132FB3 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EB349B0B25F2B40F00132FB3 /* Models.scnassets */; };
+		EB442EAB260BC6F600E172C9 /* WelcomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB442EAA260BC6F600E172C9 /* WelcomePageViewController.swift */; };
+		EB442EB5260BC84200E172C9 /* BtnVideLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB442EAF260BC84200E172C9 /* BtnVideLarge.swift */; };
+		EB442EB6260BC84200E172C9 /* BtnVide.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB442EB0260BC84200E172C9 /* BtnVide.swift */; };
+		EB442EB7260BC84200E172C9 /* BtnPleinLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB442EB2260BC84200E172C9 /* BtnPleinLarge.swift */; };
+		EB442EB8260BC84200E172C9 /* BtnPlein.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB442EB3260BC84200E172C9 /* BtnPlein.swift */; };
+		EB442EB9260BC84200E172C9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB442EB4260BC84200E172C9 /* Button.swift */; };
 		EB8E5BFF25F18BA000510693 /* TransformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E5BFE25F18BA000510693 /* TransformViewController.swift */; };
 		EB98C33D25F2A8990024A7E9 /* ARFaceGeometry.obj in Resources */ = {isa = PBXBuildFile; fileRef = EB98C33C25F2A8990024A7E9 /* ARFaceGeometry.obj */; };
 		EB98C34125F2A9190024A7E9 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB98C34025F2A9190024A7E9 /* Utilities.swift */; };
@@ -34,6 +40,12 @@
 
 /* Begin PBXFileReference section */
 		EB349B0B25F2B40F00132FB3 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
+		EB442EAA260BC6F600E172C9 /* WelcomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageViewController.swift; sourceTree = "<group>"; };
+		EB442EAF260BC84200E172C9 /* BtnVideLarge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnVideLarge.swift; sourceTree = "<group>"; };
+		EB442EB0260BC84200E172C9 /* BtnVide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnVide.swift; sourceTree = "<group>"; };
+		EB442EB2260BC84200E172C9 /* BtnPleinLarge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnPleinLarge.swift; sourceTree = "<group>"; };
+		EB442EB3260BC84200E172C9 /* BtnPlein.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtnPlein.swift; sourceTree = "<group>"; };
+		EB442EB4260BC84200E172C9 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		EB8E5BFE25F18BA000510693 /* TransformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformViewController.swift; sourceTree = "<group>"; };
 		EB98C33C25F2A8990024A7E9 /* ARFaceGeometry.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ARFaceGeometry.obj; sourceTree = "<group>"; };
 		EB98C34025F2A9190024A7E9 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -71,6 +83,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB442EAD260BC84200E172C9 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				EB442EAE260BC84200E172C9 /* BtnVide */,
+				EB442EB1260BC84200E172C9 /* BtnPlein */,
+				EB442EB4260BC84200E172C9 /* Button.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		EB442EAE260BC84200E172C9 /* BtnVide */ = {
+			isa = PBXGroup;
+			children = (
+				EB442EAF260BC84200E172C9 /* BtnVideLarge.swift */,
+				EB442EB0260BC84200E172C9 /* BtnVide.swift */,
+			);
+			path = BtnVide;
+			sourceTree = "<group>";
+		};
+		EB442EB1260BC84200E172C9 /* BtnPlein */ = {
+			isa = PBXGroup;
+			children = (
+				EB442EB2260BC84200E172C9 /* BtnPleinLarge.swift */,
+				EB442EB3260BC84200E172C9 /* BtnPlein.swift */,
+			);
+			path = BtnPlein;
+			sourceTree = "<group>";
+		};
 		EB98C32825F298740024A7E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +157,8 @@
 				EB98C34025F2A9190024A7E9 /* Utilities.swift */,
 				EB98C34625F2AB580024A7E9 /* TransformVisualization.swift */,
 				EB349B0B25F2B40F00132FB3 /* Models.scnassets */,
+				EB442EAA260BC6F600E172C9 /* WelcomePageViewController.swift */,
+				EB442EAD260BC84200E172C9 /* Buttons */,
 			);
 			path = Anti_Peep;
 			sourceTree = "<group>";
@@ -223,11 +265,17 @@
 				EBC181C8252272EB00BF8BE7 /* UIImage+Extension.swift in Sources */,
 				EBC745DB25EC59F200149B7D /* SettingTableViewCell.swift in Sources */,
 				EBC181C7252272EB00BF8BE7 /* UIButton+Extension.swift in Sources */,
+				EB442EB7260BC84200E172C9 /* BtnPleinLarge.swift in Sources */,
 				EBAE215F25223FF00071A7E9 /* ViewController.swift in Sources */,
+				EB442EB5260BC84200E172C9 /* BtnVideLarge.swift in Sources */,
 				EBC745D825EC54B500149B7D /* SettingsPageViewController.swift in Sources */,
+				EB442EB8260BC84200E172C9 /* BtnPlein.swift in Sources */,
 				EB98C34125F2A9190024A7E9 /* Utilities.swift in Sources */,
+				EB442EB9260BC84200E172C9 /* Button.swift in Sources */,
 				EB98C34725F2AB580024A7E9 /* TransformVisualization.swift in Sources */,
 				EBAE215B25223FF00071A7E9 /* AppDelegate.swift in Sources */,
+				EB442EAB260BC6F600E172C9 /* WelcomePageViewController.swift in Sources */,
+				EB442EB6260BC84200E172C9 /* BtnVide.swift in Sources */,
 				EBC181C6252272EB00BF8BE7 /* Date+Extension.swift in Sources */,
 				EBAE215D25223FF00071A7E9 /* SceneDelegate.swift in Sources */,
 				EBC181C5252272EB00BF8BE7 /* UIView+Extensions.swift in Sources */,

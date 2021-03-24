@@ -14,6 +14,10 @@ import Darwin
 
 class FaceDetectionViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    
+    var brightToggleIsOn = true
+    var offToggleIsOn = true
+    
     let numberOfFaces: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -123,4 +127,27 @@ class FaceDetectionViewController: UIViewController, AVCaptureVideoDataOutputSam
         
     }
     
+    
+    func toggleBrightness(){
+        UIScreen.main.brightness = CGFloat(0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            UIScreen.main.brightness = CGFloat(1)
+        }
+    }
+    
+    func exitApplication(){
+        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    }
+    
 }
+
+//extension FaceDetectionViewController: settingsToggleDelegate {
+//    
+//    func toggleBrightnessReaction(isOn: Bool) {
+//        brightToggleIsOn = isOn
+//        
+//    }
+//    func toggleExitAppReaction(isOn: Bool) {
+//        offToggleIsOn = isOn
+//    }
+//}

@@ -55,28 +55,15 @@ class TransformViewController: UIViewController, ARSessionDelegate {
             sceneView.delegate = self
             sceneView.session.delegate = self
             sceneView.automaticallyUpdatesLighting = true
+            //TransformVisualization().delegate = self
             setupLabel()
-            //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshLbl:", name: "refresh", object: nil)
-        
-//            guard ARFaceTrackingConfiguration.isSupported else { return }
-//            let configuration = ARFaceTrackingConfiguration()
-//            configuration.isLightEstimationEnabled = true
-//            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        
-            //tabBar.selectedItem = tabBar.items!.first!
+            setupTitle()
             selectedVirtualContent = VirtualContentType(rawValue: 0)
         }
-    
-//    func refreshLbl(notification: NSNotification) {
-//
-//        print("Received Notification")
-//        faceCountFD.text = "NilNILNILNILNILNIL"
-//    }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         // AR experiences typically involve moving the device without
         // touch input for some time, so prevent auto screen dimming.
         UIApplication.shared.isIdleTimerDisabled = true
@@ -88,7 +75,7 @@ class TransformViewController: UIViewController, ARSessionDelegate {
     // Face Detection Face Count UI Label
     let faceCountFD: UILabel = {
         let label = UILabel()
-        label.text = "hellohellohellohellohellovhello"
+        label.text = ""
         label.backgroundColor = .clear
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -96,6 +83,12 @@ class TransformViewController: UIViewController, ARSessionDelegate {
         label.font = UIFont(name: "Avenir-Heavy", size: 30)
         return label
     }()
+    
+    func setupTitle() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.title = "Gaze Tracking"
+        self.navigationController?.navigationBar.barTintColor = .systemBlue
+        }
     
     
     fileprivate func setupLabel() {
@@ -183,5 +176,13 @@ extension TransformViewController: ARSCNViewDelegate {
             else { return }
         
         selectedContentController.renderer(renderer, didUpdate: contentNode, for: anchor)
+    }
+}
+
+extension TransformViewController: eyeDataDelegate {
+    func getLookAtPoint(lookAtPoint: simd_float3) {
+        let array = String(describing: lookAtPoint)
+        self.faceCountFD.text = "\(array)"
+        print(array)
     }
 }
